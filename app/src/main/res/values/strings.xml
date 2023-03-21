@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">intechsystems-shop</string>
+    <string name="app_name">Intech Shop</string>
+    <string name="error_message_template">Error: %1$s</string>
+    <string name="network_restored">Connection restored</string>
+    <string name="error_network_disconnected">No connection</string>
+    <string name="categories">Categories</string>
 </resources>

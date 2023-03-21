@@ -19,7 +19,26 @@ android {
     }
 
     buildTypes {
+
+        def authKey = "TODO: insert yours"
+        def pageSize = "20"
+        def callTimeOutSec = "5"
+        def cacheStaleSec = "86400" // 60 * 60 * 24, 1 day
+        def cacheSizeByte = "5242880" // 5 * 1024 * 1024, 5MB
+
+        debug {
+            buildConfigField "int", "PAGE_SIZE", pageSize
+            buildConfigField "long", "CALL_TIME_OUT_SEC", callTimeOutSec
+            buildConfigField "long", "CACHE_STALE_SEC", cacheStaleSec
+            buildConfigField "long", "CACHE_SIZE_BYTE", cacheSizeByte
+            buildConfigField "String", "AUTH_KEY", "\"$authKey\""
+        }
         release {
+            buildConfigField "int", "PAGE_SIZE", pageSize
+            buildConfigField "long", "CALL_TIME_OUT_SEC", callTimeOutSec
+            buildConfigField "long", "CACHE_STALE_SEC", cacheStaleSec
+            buildConfigField "long", "CACHE_SIZE_BYTE", cacheSizeByte
+            buildConfigField "String", "AUTH_KEY", "\"$authKey\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -30,6 +49,12 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.3.2'
     }
 }
 
