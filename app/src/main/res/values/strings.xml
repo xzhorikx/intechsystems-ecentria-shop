@@ -5,4 +5,7 @@
     <string name="error_network_disconnected">No connection</string>
     <string name="categories">Categories</string>
     <string name="price_template">Price: %1$s</string>
+    <string name="description_template">Detailed description: %1$s</string>
+    <string name="details">Details</string>
+    <string name="error_product_details">Unable to load product details</string>
 </resources>

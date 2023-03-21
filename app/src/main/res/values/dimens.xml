@@ -7,5 +7,6 @@
     <dimen name="padding_8">8dp</dimen>
     <dimen name="shimmer_height">64dp</dimen>
     <dimen name="product_size">64dp</dimen>
+    <dimen name="product_full_size">196dp</dimen>
     <dimen name="corners_4">4dp</dimen>
 </resources>

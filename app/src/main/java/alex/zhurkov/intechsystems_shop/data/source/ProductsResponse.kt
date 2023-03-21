@@ -15,6 +15,6 @@ data class ProductResponse(
     @SerializedName("fullName") val fullName: String?,
     @SerializedName("shortName") val shortName: String?,
     @SerializedName("productId") val id: Long?,
-    @SerializedName("listPrice") val listPrice: Double?,
+    @SerializedName("listPrice") val listPrice: Any?,
     @SerializedName("primaryImage") val imageUrl: String?
 )

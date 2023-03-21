@@ -65,7 +65,7 @@ fun MainScreen(
                     )
                 }
             ) { paddingValues ->
-                MainContent(
+                CategoriesContent(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(
@@ -89,7 +89,7 @@ fun MainScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterialApi
 @Composable
-fun MainContent(
+fun CategoriesContent(
     modifier: Modifier = Modifier,
     renderModel: CategoriesModel,
     onPullToRefresh: () -> Unit,

@@ -50,7 +50,7 @@ class ProductsRepositoryImpl(
         pageId: Int,
         limit: Int
     ): Page<Product>? {
-        val response = remoteSource.getProducts(category = categoryUrl)
+        val response = remoteSource.getProducts(categoryId = categoryUrl)
         localSource.saveProducts(response.gridProducts.products.map { it.toModel(categoryId) })
         return localSource.getProductPage(categoryId = categoryId, page = pageId, limit = limit)
     }
@@ -61,6 +61,6 @@ class ProductsRepositoryImpl(
         productId = id ?: -1,
         name = shortName ?: fullName ?: "no_name",
         imageUrl = imageUrl ?: "no_image",
-        listPrice = listPrice ?: -1.0
+        listPrice = runCatching { listPrice as Double }.getOrElse { runCatching { (listPrice as Long).toDouble() }.getOrElse { -1.0 } },
     )
 }

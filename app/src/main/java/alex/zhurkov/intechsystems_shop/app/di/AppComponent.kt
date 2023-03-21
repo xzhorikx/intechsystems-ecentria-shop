@@ -2,6 +2,7 @@ package alex.zhurkov.intechsystems_shop.app.di
 
 import alex.zhurkov.intechsystems_shop.app.MainApplication
 import alex.zhurkov.intechsystems_shop.feature.categories.di.CategoriesComponent
+import alex.zhurkov.intechsystems_shop.feature.product_details.di.ProductDetailsComponent
 import alex.zhurkov.intechsystems_shop.feature.products.di.ProductsComponent
 import dagger.BindsInstance
 import dagger.Component
@@ -27,4 +28,5 @@ interface AppComponent {
 
     fun plusCategoriesComponent(): CategoriesComponent.Factory
     fun plusProductsComponent(): ProductsComponent.Factory
+    fun plusProductDetailsComponent(): ProductDetailsComponent.Factory
 }

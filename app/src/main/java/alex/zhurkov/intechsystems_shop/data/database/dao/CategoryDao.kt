@@ -27,5 +27,5 @@ interface CategoryDao {
         WHERE categoryId = :id
         """
     )
-    fun observeCategory(id: String): Flow<CategoryEntity>
+    fun observeCategory(id: String): Flow<CategoryEntity?>
 }

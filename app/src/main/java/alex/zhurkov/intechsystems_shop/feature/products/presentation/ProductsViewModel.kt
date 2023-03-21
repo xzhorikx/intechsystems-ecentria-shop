@@ -36,7 +36,7 @@ class ProductsViewModel(
     override fun onObserverActive(isFirstTime: Boolean) {
         super.onObserverActive(isFirstTime)
         if (isFirstTime) {
-            state.nextPage?.let { loadRepoPage(pageIndex = it) }
+            state.nextPage?.let { loadProductsPage(pageIndex = it) }
         }
     }
 
@@ -49,7 +49,7 @@ class ProductsViewModel(
             oldState.isNetworkConnected != null && (oldState.isNetworkConnected != newState.isNetworkConnected)
 
         if (shouldLoadNextPage) {
-            state.nextPage?.let { loadRepoPage(pageIndex = it) }
+            state.nextPage?.let { loadProductsPage(pageIndex = it) }
         }
         isNetworkChanged.whenTrue {
             newState.isNetworkConnected?.let {
@@ -66,7 +66,7 @@ class ProductsViewModel(
 
     override fun processAction(action: ProductsAction) {
         when (action) {
-            ProductsAction.Refresh -> refreshRepos()
+            ProductsAction.Refresh -> refreshProducts()
             is ProductsAction.LastVisibleItemChanged -> {
                 if (action.id != state.lastVisibleItemId) {
                     sendChange(ProductsChange.LastVisibleItemChanged(action.id))
@@ -81,13 +81,13 @@ class ProductsViewModel(
         pageJob?.cancel()
     }
 
-    private fun refreshRepos() {
-        loadRepoPage(
+    private fun refreshProducts() {
+        loadProductsPage(
             pageIndex = state.initialPageId, forceRefresh = true
         )
     }
 
-    private fun loadRepoPage(
+    private fun loadProductsPage(
         pageIndex: Int, forceRefresh: Boolean = false
     ) {
         when (forceRefresh) {

@@ -8,6 +8,7 @@ import alex.zhurkov.intechsystems_shop.domain.model.Category
 import alex.zhurkov.intechsystems_shop.domain.model.Page
 import alex.zhurkov.intechsystems_shop.domain.source.CategoryLocalSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
 class CategoryLocalSourceImpl(
@@ -29,5 +30,5 @@ class CategoryLocalSourceImpl(
         database.categoryDao().save(categories.map(categoryMapper::toEntity))
 
     override fun observeCategory(id: String): Flow<Category> =
-        database.categoryDao().observeCategory(id = id).map(categoryMapper::toModel)
+        database.categoryDao().observeCategory(id = id).filterNotNull().map(categoryMapper::toModel)
 }

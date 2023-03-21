@@ -76,7 +76,7 @@ fun ProductsScreen(
                         }
                     })
             }) { paddingValues ->
-                MainContent(
+                ProductsContent(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(
@@ -100,7 +100,7 @@ fun ProductsScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterialApi
 @Composable
-fun MainContent(
+fun ProductsContent(
     modifier: Modifier = Modifier,
     renderModel: ProductsModel,
     onPullToRefresh: () -> Unit,

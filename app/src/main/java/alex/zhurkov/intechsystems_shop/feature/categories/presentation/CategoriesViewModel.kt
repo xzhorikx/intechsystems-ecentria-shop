@@ -30,7 +30,7 @@ class CategoriesViewModel(
     override fun onObserverActive(isFirstTime: Boolean) {
         super.onObserverActive(isFirstTime)
         if (isFirstTime) {
-            state.nextPage?.let { loadRepoPage(pageIndex = it) }
+            state.nextPage?.let { loadCategoriesPage(pageIndex = it) }
         }
     }
 
@@ -43,7 +43,7 @@ class CategoriesViewModel(
             oldState.isNetworkConnected != null && (oldState.isNetworkConnected != newState.isNetworkConnected)
 
         if (shouldLoadNextPage) {
-            state.nextPage?.let { loadRepoPage(pageIndex = it) }
+            state.nextPage?.let { loadCategoriesPage(pageIndex = it) }
         }
         isNetworkChanged.whenTrue {
             newState.isNetworkConnected?.let {
@@ -58,7 +58,7 @@ class CategoriesViewModel(
 
     override fun processAction(action: CategoriesAction) {
         when (action) {
-            CategoriesAction.Refresh -> refreshRepos()
+            CategoriesAction.Refresh -> refreshCategories()
             is CategoriesAction.LastVisibleItemChanged -> {
                 if (action.id != state.lastVisibleItemId) {
                     sendChange(CategoriesChange.LastVisibleItemChanged(action.id))
@@ -73,14 +73,14 @@ class CategoriesViewModel(
         pageJob?.cancel()
     }
 
-    private fun refreshRepos() {
-        loadRepoPage(
+    private fun refreshCategories() {
+        loadCategoriesPage(
             pageIndex = state.initialPageId,
             forceRefresh = true
         )
     }
 
-    private fun loadRepoPage(
+    private fun loadCategoriesPage(
         pageIndex: Int,
         forceRefresh: Boolean = false
     ) {

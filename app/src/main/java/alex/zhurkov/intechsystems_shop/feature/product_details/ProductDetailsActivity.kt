@@ -1,17 +1,14 @@
-package alex.zhurkov.intechsystems_shop.feature.products
+package alex.zhurkov.intechsystems_shop.feature.product_details
 
 import alex.zhurkov.intechsystems_shop.R
 import alex.zhurkov.intechsystems_shop.common.arch.UIEvent
-import alex.zhurkov.intechsystems_shop.feature.product_details.ProductDetailsActivity
-import alex.zhurkov.intechsystems_shop.feature.product_details.model.ProductDetailsInputData
-import alex.zhurkov.intechsystems_shop.feature.product_details.model.toBundle
-import alex.zhurkov.intechsystems_shop.feature.products.di.ProductsComponent
-import alex.zhurkov.intechsystems_shop.feature.products.model.getInputData
-import alex.zhurkov.intechsystems_shop.feature.products.presentation.ProductsAction
+import alex.zhurkov.intechsystems_shop.feature.categories.CategoriesActivity
+import alex.zhurkov.intechsystems_shop.feature.product_details.di.ProductDetailsComponent
+import alex.zhurkov.intechsystems_shop.feature.product_details.model.getInputData
+import alex.zhurkov.intechsystems_shop.feature.product_details.presentation.ProductDetailsViewModel
+import alex.zhurkov.intechsystems_shop.feature.product_details.presentation.ProductDetailsViewModelFactory
+import alex.zhurkov.intechsystems_shop.feature.product_details.views.ProductDetailsScreen
 import alex.zhurkov.intechsystems_shop.feature.products.presentation.ProductsEvent
-import alex.zhurkov.intechsystems_shop.feature.products.presentation.ProductsViewModel
-import alex.zhurkov.intechsystems_shop.feature.products.presentation.ProductsViewModelFactory
-import alex.zhurkov.intechsystems_shop.feature.products.views.ProductsScreen
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -24,39 +21,35 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.Observer
 import javax.inject.Inject
 
-class ProductsActivity : ComponentActivity() {
+class ProductDetailsActivity : ComponentActivity() {
 
-    private val component: ProductsComponent by lazy {
-        (application as ProductsComponent.ComponentProvider).provideProductsComponent(
+    private val component: ProductDetailsComponent by lazy {
+        (application as ProductDetailsComponent.ComponentProvider).provideProductDetailsComponent(
             activity = this,
             inputData = intent.extras.getInputData()
         )
     }
 
     @Inject
-    lateinit var viewModelFactory: ProductsViewModelFactory
-    private val viewModel by viewModels<ProductsViewModel> { viewModelFactory }
+    lateinit var viewModelFactory: ProductDetailsViewModelFactory
+    private val viewModel by viewModels<ProductDetailsViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         component.inject(this)
         viewModel.observableEvents.observe(this, Observer(::renderEvent))
         setContent {
-            ProductsScreen(
+            ProductDetailsScreen(
                 modifier = Modifier.fillMaxSize(),
                 uiModel = viewModel.observableModel,
-                onBackClick = { this@ProductsActivity.finish() },
-                onPullToRefresh = { viewModel.dispatch(ProductsAction.Refresh) },
-                onLastItemVisible = {
-                    viewModel.dispatch(ProductsAction.LastVisibleItemChanged(id = it))
-                },
-                onClick = {
-                    this@ProductsActivity.startActivity(
-                        Intent(this@ProductsActivity, ProductDetailsActivity::class.java).putExtras(
-                            ProductDetailsInputData(productId = it.id).toBundle()
-                        )
+                onHomeClick = {
+                    this@ProductDetailsActivity.startActivity(
+                        Intent(this@ProductDetailsActivity, CategoriesActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        }
                     )
                 },
+                onBackClick = { this@ProductDetailsActivity.finish() },
             )
         }
     }
