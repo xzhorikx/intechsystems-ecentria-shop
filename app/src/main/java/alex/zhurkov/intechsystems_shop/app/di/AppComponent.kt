@@ -2,6 +2,7 @@ package alex.zhurkov.intechsystems_shop.app.di
 
 import alex.zhurkov.intechsystems_shop.app.MainApplication
 import alex.zhurkov.intechsystems_shop.feature.categories.di.CategoriesComponent
+import alex.zhurkov.intechsystems_shop.feature.products.di.ProductsComponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -24,5 +25,6 @@ interface AppComponent {
         fun create(@BindsInstance app: MainApplication): AppComponent
     }
 
-    fun plusHomeActivityComponent(): CategoriesComponent.Factory
+    fun plusCategoriesComponent(): CategoriesComponent.Factory
+    fun plusProductsComponent(): ProductsComponent.Factory
 }

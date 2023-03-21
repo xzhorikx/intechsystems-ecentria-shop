@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CategoryDao {
@@ -19,4 +20,12 @@ interface CategoryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(categories: List<CategoryEntity>)
+
+    @Query(
+        """
+        SELECT * FROM category
+        WHERE categoryId = :id
+        """
+    )
+    fun observeCategory(id: String): Flow<CategoryEntity>
 }

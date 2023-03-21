@@ -7,11 +7,12 @@ import alex.zhurkov.intechsystems_shop.domain.model.Category
 import alex.zhurkov.intechsystems_shop.domain.model.Page
 import alex.zhurkov.intechsystems_shop.domain.repository.CategoriesRepository
 import alex.zhurkov.intechsystems_shop.domain.source.CategoryLocalSource
+import kotlinx.coroutines.flow.Flow
 
 class CategoryRepositoryImpl(
     private val configSource: ConfigSource,
     private val localSource: CategoryLocalSource,
-    private val remoteSource: CategoryRemoteSource,
+    private val remoteSource: CategoryRemoteSource
 ) : CategoriesRepository {
     override suspend fun getCategoryPage(page: Int, skipCache: Boolean): Page<Category>? {
         val limit = configSource.pageSize
@@ -27,6 +28,8 @@ class CategoryRepositoryImpl(
             }
         }
     }
+
+    override fun observeCategory(id: String): Flow<Category> = localSource.observeCategory(id = id)
 
     private suspend fun getRemoteCategories(pageId: Int, limit: Int): Page<Category>? {
         val response = remoteSource.getCategories()

@@ -10,6 +10,10 @@ import alex.zhurkov.intechsystems_shop.feature.categories.presentation.Categorie
 import alex.zhurkov.intechsystems_shop.feature.categories.presentation.CategoriesViewModel
 import alex.zhurkov.intechsystems_shop.feature.categories.presentation.CategoriesViewModelFactory
 import alex.zhurkov.intechsystems_shop.feature.categories.views.MainScreen
+import alex.zhurkov.intechsystems_shop.feature.products.ProductsActivity
+import alex.zhurkov.intechsystems_shop.feature.products.model.ProductsInputData
+import alex.zhurkov.intechsystems_shop.feature.products.model.toBundle
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -26,7 +30,7 @@ import javax.inject.Inject
 class CategoriesActivity : ComponentActivity() {
 
     private val component: CategoriesComponent by lazy {
-        (application as CategoriesComponent.ComponentProvider).provideMainComponent(this)
+        (application as CategoriesComponent.ComponentProvider).provideCategoriesComponent(this)
     }
 
     @Inject
@@ -46,11 +50,11 @@ class CategoriesActivity : ComponentActivity() {
                     viewModel.dispatch(CategoriesAction.LastVisibleItemChanged(id = it))
                 },
                 onClick = {
-//                    this@HomeActivity.startActivity(
-//                        Intent(this@HomeActivity, RepoInfoActivity::class.java).putExtras(
-//                            RepoInfoInputData(repoId = it.id.toLong()).toBundle()
-//                        )
-//                    )
+                    this@CategoriesActivity.startActivity(
+                        Intent(this@CategoriesActivity, ProductsActivity::class.java).putExtras(
+                            ProductsInputData(categoryId = it.id, url = it.url).toBundle()
+                        )
+                    )
                 },
             )
         }

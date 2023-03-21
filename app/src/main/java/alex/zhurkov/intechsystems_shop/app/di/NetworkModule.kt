@@ -3,6 +3,7 @@ package alex.zhurkov.intechsystems_shop.app.di
 import alex.zhurkov.intechsystems_shop.data.network.interceptor.AuthControlInterceptor
 import alex.zhurkov.intechsystems_shop.data.network.interceptor.CacheControlInterceptor
 import alex.zhurkov.intechsystems_shop.data.source.CategoryRemoteSource
+import alex.zhurkov.intechsystems_shop.data.source.ProductRemoteSource
 import alex.zhurkov.intechsystems_shop.domain.config.ConfigSource
 import android.content.Context
 import dagger.Module
@@ -78,7 +79,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun shopNetworkClient(
+    fun categoryRemoteSource(
         @ShopHttpClient httpClient: OkHttpClient
     ): CategoryRemoteSource = Retrofit.Builder()
         .baseUrl("https://www.opticsplanet.com/api/0.2/")
@@ -86,4 +87,15 @@ class NetworkModule {
         .client(httpClient)
         .build()
         .create(CategoryRemoteSource::class.java)
+
+    @Provides
+    @Singleton
+    fun productsRemoteSource(
+        @ShopHttpClient httpClient: OkHttpClient
+    ): ProductRemoteSource = Retrofit.Builder()
+        .baseUrl("https://www.opticsplanet.com/iv-api/0.3/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(httpClient)
+        .build()
+        .create(ProductRemoteSource::class.java)
 }

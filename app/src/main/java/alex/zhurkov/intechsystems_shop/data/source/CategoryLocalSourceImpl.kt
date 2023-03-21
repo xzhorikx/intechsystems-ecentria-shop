@@ -7,6 +7,8 @@ import alex.zhurkov.intechsystems_shop.domain.config.ConfigSource
 import alex.zhurkov.intechsystems_shop.domain.model.Category
 import alex.zhurkov.intechsystems_shop.domain.model.Page
 import alex.zhurkov.intechsystems_shop.domain.source.CategoryLocalSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class CategoryLocalSourceImpl(
     private val database: AppDatabase,
@@ -25,4 +27,7 @@ class CategoryLocalSourceImpl(
 
     override suspend fun saveCategories(categories: List<Category>) =
         database.categoryDao().save(categories.map(categoryMapper::toEntity))
+
+    override fun observeCategory(id: String): Flow<Category> =
+        database.categoryDao().observeCategory(id = id).map(categoryMapper::toModel)
 }

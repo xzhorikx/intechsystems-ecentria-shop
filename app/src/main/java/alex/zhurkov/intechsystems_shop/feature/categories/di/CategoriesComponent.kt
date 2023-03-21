@@ -16,7 +16,7 @@ interface CategoriesComponent {
     fun inject(target: CategoriesActivity)
 
     interface ComponentProvider {
-        fun provideMainComponent(activity: CategoriesActivity): CategoriesComponent
+        fun provideCategoriesComponent(activity: CategoriesActivity): CategoriesComponent
     }
 
     @Subcomponent.Factory
