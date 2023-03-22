@@ -39,7 +39,7 @@ android {
             buildConfigField "long", "CACHE_STALE_SEC", cacheStaleSec
             buildConfigField "long", "CACHE_SIZE_BYTE", cacheSizeByte
             buildConfigField "String", "AUTH_KEY", "\"$authKey\""
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
