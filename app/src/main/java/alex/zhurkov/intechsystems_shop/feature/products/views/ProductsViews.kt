@@ -182,6 +182,7 @@ fun ProductPreview(
         error = ColorPainter(Color.Black),
     )
     Row(modifier = modifier
+        .testTag("item_${item.id}")
         .fillMaxWidth()
         .clickable { onClick(item) }) {
         Image(
@@ -222,6 +223,6 @@ fun ProductLoading(
         modifier = modifier
             .shimmer(shimmer)
             .background(MaterialTheme.colorScheme.primaryContainer)
-            .testTag(item.id.toString())
+            .testTag("loading_${item.id}")
     )
 }
