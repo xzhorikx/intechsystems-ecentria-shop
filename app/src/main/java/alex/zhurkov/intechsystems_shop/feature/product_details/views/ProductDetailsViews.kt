@@ -174,9 +174,7 @@ fun ProductDetails(
 }
 
 @Composable
-fun ProductDetailsLoading(
-    modifier: Modifier = Modifier, item: ProductDetailsItem.Loading
-) {
+fun ProductDetailsLoading(modifier: Modifier = Modifier, item: ProductDetailsItem.Loading) {
     val shimmer = rememberShimmer(
         shimmerBounds = ShimmerBounds.Window,
         theme = LocalShimmerTheme.current.copy(

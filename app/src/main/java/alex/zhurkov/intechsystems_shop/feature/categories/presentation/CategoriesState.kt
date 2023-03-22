@@ -32,6 +32,6 @@ data class CategoriesState(
     val nextPage =
         isLastPageLoaded.whenFalse { (pages.lastOrNull()?.pageId?.inc() ?: initialPageId) }
 
-    val lastRepoId = pages.flatMap { it.items }.lastOrNull()?.categoryId
+    val lastCategoryId = pages.flatMap { it.items }.lastOrNull()?.categoryId
 
 }

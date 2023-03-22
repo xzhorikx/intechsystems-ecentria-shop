@@ -44,7 +44,7 @@ class ProductsViewModel(
         super.onStateUpdated(oldState, newState)
         val isLastVisibleItemUpdated = oldState.lastVisibleItemId != newState.lastVisibleItemId
         val shouldLoadNextPage =
-            isLastVisibleItemUpdated && newState.lastRepoId == newState.lastVisibleItemId
+            isLastVisibleItemUpdated && newState.lastProductId == newState.lastVisibleItemId
         val isNetworkChanged =
             oldState.isNetworkConnected != null && (oldState.isNetworkConnected != newState.isNetworkConnected)
 

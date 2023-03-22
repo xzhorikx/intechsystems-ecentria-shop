@@ -38,7 +38,7 @@ class CategoriesViewModel(
         super.onStateUpdated(oldState, newState)
         val isLastVisibleItemUpdated = oldState.lastVisibleItemId != newState.lastVisibleItemId
         val shouldLoadNextPage =
-            isLastVisibleItemUpdated && newState.lastRepoId == newState.lastVisibleItemId
+            isLastVisibleItemUpdated && newState.lastCategoryId == newState.lastVisibleItemId
         val isNetworkChanged =
             oldState.isNetworkConnected != null && (oldState.isNetworkConnected != newState.isNetworkConnected)
 

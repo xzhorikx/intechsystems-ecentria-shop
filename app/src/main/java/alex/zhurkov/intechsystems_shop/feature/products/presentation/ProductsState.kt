@@ -39,5 +39,5 @@ data class ProductsState(
     val nextPage =
         isLastPageLoaded.whenFalse { (pages.lastOrNull()?.pageId?.inc() ?: initialPageId) }
 
-    val lastRepoId = pages.flatMap { it.items }.lastOrNull()?.productId
+    val lastProductId = pages.flatMap { it.items }.lastOrNull()?.productId
 }
