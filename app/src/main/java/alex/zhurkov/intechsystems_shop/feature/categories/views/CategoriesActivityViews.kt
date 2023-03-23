@@ -96,8 +96,13 @@ fun CategoriesContent(
     onLastItemVisible: (id: String) -> Unit,
     onClick: (CategoryItem.Data) -> Unit,
 ) {
-    val pullToRefreshState =
-        rememberPullRefreshState(renderModel.isRefreshing, onPullToRefresh)
+    // The LaunchedEffect is needed to fix the hiding of the indicator: https://issuetracker.google.com/issues/248274004
+    // Without this workaround the indicator would be visible even if the loading finished
+    var isRefreshingWorkaround by remember { mutableStateOf(renderModel.isRefreshing) }
+    LaunchedEffect(key1 = renderModel.isRefreshing) {
+        isRefreshingWorkaround = renderModel.isRefreshing
+    }
+    val pullToRefreshState = rememberPullRefreshState(isRefreshingWorkaround, onPullToRefresh)
     val state = rememberLazyListState()
     CompositionLocalProvider(
         LocalOverscrollConfiguration provides null
@@ -164,7 +169,9 @@ fun CategoryPreview(
     modifier: Modifier = Modifier,
     onClick: (CategoryItem.Data) -> Unit,
 ) {
-    Column(modifier = modifier.fillMaxWidth().clickable { onClick(item) }) {
+    Column(modifier = modifier
+        .fillMaxWidth()
+        .clickable { onClick(item) }) {
         Text(item.fullName)
     }
 }

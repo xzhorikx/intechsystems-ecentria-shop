@@ -106,7 +106,13 @@ fun ProductsContent(
     onLastItemVisible: (id: Long) -> Unit,
     onClick: (ProductsItem.Data) -> Unit,
 ) {
-    val pullToRefreshState = rememberPullRefreshState(renderModel.isRefreshing, onPullToRefresh)
+    // The LaunchedEffect is needed to fix the hiding of the indicator: https://issuetracker.google.com/issues/248274004
+    // Without this workaround the indicator would be visible even if the loading finished
+    var isRefreshingWorkaround by remember { mutableStateOf(renderModel.isRefreshing) }
+    LaunchedEffect(key1 = renderModel.isRefreshing) {
+        isRefreshingWorkaround = renderModel.isRefreshing
+    }
+    val pullToRefreshState = rememberPullRefreshState(isRefreshingWorkaround, onPullToRefresh)
     val state = rememberLazyListState()
     CompositionLocalProvider(
         LocalOverscrollConfiguration provides null
