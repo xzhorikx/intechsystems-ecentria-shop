@@ -1,7 +1,9 @@
 package alex.zhurkov.intechsystems_shop.feature.products.presentation
 
 import alex.zhurkov.intechsystems_shop.common.arch.Reducer
+import alex.zhurkov.intechsystems_shop.domain.model.Category
 import alex.zhurkov.intechsystems_shop.domain.model.Page
+import alex.zhurkov.intechsystems_shop.domain.model.Product
 
 class ProductsReducer : Reducer<ProductsState, ProductsChange> {
     override fun reduce(state: ProductsState, change: ProductsChange): ProductsState {
@@ -16,7 +18,12 @@ class ProductsReducer : Reducer<ProductsState, ProductsChange> {
                     )
                     state.copy(pages = state.pages + lastPage.copy(isLastPage = true))
                 }
-                else -> state.copy(pages = state.pages + change.data)
+                else -> {
+                    val page =
+                        change.data.copy(items = change.data.items.distinctBy(Product::productId))
+                    val pages = (state.pages + page).distinctBy(Page<Product>::pageId)
+                    state.copy(pages = pages)
+                }
             }
             is ProductsChange.PageLoadingChanged -> state.copy(isPageLoading = change.isLoading)
             is ProductsChange.RefreshChanged -> state.copy(isRefreshing = change.isRefreshing)

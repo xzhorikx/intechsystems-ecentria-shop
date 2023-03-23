@@ -1,6 +1,7 @@
 package alex.zhurkov.intechsystems_shop.feature.categories.presentation
 
 import alex.zhurkov.intechsystems_shop.common.arch.Reducer
+import alex.zhurkov.intechsystems_shop.domain.model.Category
 import alex.zhurkov.intechsystems_shop.domain.model.Page
 
 class CategoriesReducer : Reducer<CategoriesState, CategoriesChange> {
@@ -16,7 +17,12 @@ class CategoriesReducer : Reducer<CategoriesState, CategoriesChange> {
                     )
                     state.copy(pages = state.pages + lastPage.copy(isLastPage = true))
                 }
-                else -> state.copy(pages = state.pages + change.data)
+                else -> {
+                    val page =
+                        change.data.copy(items = change.data.items.distinctBy(Category::categoryId))
+                    val pages = (state.pages + page).distinctBy(Page<Category>::pageId)
+                    state.copy(pages = pages)
+                }
             }
             is CategoriesChange.PageLoadingChanged -> state.copy(isPageLoading = change.isLoading)
             is CategoriesChange.RefreshChanged -> state.copy(isRefreshing = change.isRefreshing)
