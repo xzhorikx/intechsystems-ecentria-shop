@@ -10,6 +10,7 @@ import alex.zhurkov.intechsystems_shop.feature.products.ProductsActivity
 import alex.zhurkov.intechsystems_shop.feature.products.di.ProductsComponent
 import alex.zhurkov.intechsystems_shop.feature.products.model.ProductsInputData
 import android.app.Application
+import coil.Coil
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import timber.log.Timber
@@ -26,6 +27,7 @@ class MainApplication : Application(), CategoriesComponent.ComponentProvider,
     override fun onCreate() {
         component.inject(this)
         Timber.plant(Timber.DebugTree())
+        Coil.setImageLoader(this)
         super.onCreate()
     }
 

@@ -133,12 +133,8 @@ fun ProductDetails(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val imageLoader = remember {
-        ImageLoader.Builder(context).placeholder(R.drawable.ic_loading_animated).build()
-    }
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(context).data(data = item.imageUrl).crossfade(true).build(),
-        imageLoader = imageLoader,
         error = ColorPainter(Color.Black),
     )
     Column(

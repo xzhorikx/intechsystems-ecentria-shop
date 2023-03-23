@@ -41,7 +41,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.lifecycle.LiveData
-import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.valentinilk.shimmer.LocalShimmerTheme
@@ -173,12 +172,8 @@ fun ProductPreview(
     onClick: (ProductsItem.Data) -> Unit,
 ) {
     val context = LocalContext.current
-    val imageLoader = remember {
-        ImageLoader.Builder(context).placeholder(R.drawable.ic_loading_animated).build()
-    }
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(context).data(data = item.imageUrl).crossfade(true).build(),
-        imageLoader = imageLoader,
         error = ColorPainter(Color.Black),
     )
     Row(modifier = modifier
